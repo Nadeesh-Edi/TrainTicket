@@ -1,4 +1,7 @@
-﻿using TrainTicketApi.Services;
+﻿// Controller for User model methods
+// User includes Base user and Travel Agent
+
+using TrainTicketApi.Services;
 using TrainTicketApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +17,12 @@ namespace TrainTicketApi.Controllers
         public UserController(UserService userService) =>
             _userService = userService;
 
+        // Get all Users
         [HttpGet]
         public async Task<List<User>> Get() =>
             await _userService.GetAsync();
 
+        // Get Users by Id
         [HttpGet("get")]
         public async Task<ActionResult<User>> Get(string id)
         {
@@ -31,6 +36,7 @@ namespace TrainTicketApi.Controllers
             return user;
         }
 
+        // Register a User
         [HttpPost("register")]
         public async Task<IActionResult> Register(User user)
         {
@@ -39,6 +45,7 @@ namespace TrainTicketApi.Controllers
             return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
         }
 
+        // User login API which authenticates and returns the role
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest body)
         {
@@ -56,7 +63,6 @@ namespace TrainTicketApi.Controllers
                 {
                     if (user.Pwrd == body.password)
                     {
-                        // JsonResult results = new JsonResult(user.Role, user.Status);
                         var results = new
                         {
                             user.Role,
@@ -80,6 +86,7 @@ namespace TrainTicketApi.Controllers
             return result;
         }
 
+        // Deactivate User
         [HttpPost("deactivate")]
         public async Task<IActionResult> DeactivateUser(string id)
         {
@@ -102,6 +109,7 @@ namespace TrainTicketApi.Controllers
             }
         }
 
+        // Reactivate User
         [HttpPost("reactivate")]
         public async Task<IActionResult> ReActivateUser(string id)
         {

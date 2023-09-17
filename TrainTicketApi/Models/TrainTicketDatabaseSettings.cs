@@ -1,4 +1,7 @@
-﻿namespace TrainTicketApi.Models
+﻿// Database configurations class.
+// References to the data in appsettings.json
+
+namespace TrainTicketApi.Models
 {
     public class TrainTicketDatabaseSettings
     {

@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<TrainTicketDatabaseSettings>(
     builder.Configuration.GetSection("TrainTicketDatabase"));
 
+// Register the Service classes in the system
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TravellerService>();
 

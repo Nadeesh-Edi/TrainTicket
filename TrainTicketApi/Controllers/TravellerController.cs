@@ -1,4 +1,6 @@
-﻿using TrainTicketApi.Services;
+﻿// Controller for Traveller Model
+
+using TrainTicketApi.Services;
 using TrainTicketApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,12 @@ namespace TrainTicketApi.Controllers
         public TravellerController(TravellerService travellerService) =>
             _travellerService = travellerService;
 
+        // Get all travellers from db
         [HttpGet]
         public async Task<List<Traveller>> Get() =>
             await _travellerService.GetAsync();
 
+        // Get a traveller by id
         [HttpGet("get")]
         public async Task<ActionResult<Traveller>> Get(string id)
         {
@@ -30,6 +34,7 @@ namespace TrainTicketApi.Controllers
             return user;
         }
 
+        // Register traveller
         [HttpPost("register")]
         public async Task<IActionResult> Register(Traveller user)
         {
@@ -38,6 +43,7 @@ namespace TrainTicketApi.Controllers
             return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
         }
 
+        // Traveller login api
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest body)
         {
@@ -55,7 +61,7 @@ namespace TrainTicketApi.Controllers
                 {
                     if (user.Pwrd == body.password)
                     {
-                        // JsonResult results = new JsonResult(user.Role, user.Status);
+                        // Check if the user is deactivated
                         if (user.Status == 0)
                         {
                             result = Content("You are deactivated. Please contact admin");
@@ -81,6 +87,7 @@ namespace TrainTicketApi.Controllers
             return result;
         }
 
+        // Deactivate traveller (Make status = 0)
         [HttpPost("deactivate")]
         public async Task<IActionResult> DeactivateUser(string id)
         {
@@ -103,6 +110,7 @@ namespace TrainTicketApi.Controllers
             }
         }
 
+        // Reactivate traveller (Make status = 1)
         [HttpPost("reactivate")]
         public async Task<IActionResult> ReActivateUser(string id)
         {
@@ -125,6 +133,7 @@ namespace TrainTicketApi.Controllers
             }
         }
 
+        // Edit traveller details
         [HttpPost("edit")]
         public async Task<IActionResult> Edit(string id, Traveller traveller)
         {
