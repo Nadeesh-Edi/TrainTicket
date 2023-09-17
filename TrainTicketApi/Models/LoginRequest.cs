@@ -1,4 +1,7 @@
-﻿namespace TrainTicketApi.Models
+﻿// Model for the Login request object.
+// The model in which Request body should come in for Login APIs
+
+namespace TrainTicketApi.Models
 {
     public class LoginRequest
     {

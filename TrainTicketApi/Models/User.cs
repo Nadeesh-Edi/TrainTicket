@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿// Model for User object
+
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
 

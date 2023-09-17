@@ -1,4 +1,7 @@
-﻿using TrainTicketApi.Models;
+﻿// Service class for Traveller Model.
+// Handles the db configs and basic crud methods to the db.
+
+using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -21,18 +24,23 @@ namespace TrainTicketApi.Services
                 trainTicketDatabaseSettings.Value.TravellerCollectionName);
         }
 
+        // Get all Travellers as a List
         public async Task<List<Traveller>> GetAsync() =>
             await _travellersCollection.Find(_ => true).ToListAsync();
 
+        // Get a Traveller by id
         public async Task<Traveller?> GetAsync(string id) =>
             await _travellersCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+        // Save a new Traveller object to the db
         public async Task CreateAsync(Traveller newUser) =>
             await _travellersCollection.InsertOneAsync(newUser);
 
+        // Update an existing Traveller given the id
         public async Task UpdateAsync(string id, Traveller updatedUser) =>
             await _travellersCollection.ReplaceOneAsync(x => x.Id == id, updatedUser);
 
+        // Delete an existing Traveller given the id
         public async Task RemoveAsync(string id) =>
             await _travellersCollection.DeleteOneAsync(x => x.Id == id);
     }
