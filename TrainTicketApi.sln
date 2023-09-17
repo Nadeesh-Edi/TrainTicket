@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTicketApi", "TrainTicketApi\TrainTicketApi.csproj", "{5D123E59-2B45-4FE1-B563-3905FFB59790}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D123E59-2B45-4FE1-B563-3905FFB59790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D123E59-2B45-4FE1-B563-3905FFB59790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D123E59-2B45-4FE1-B563-3905FFB59790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D123E59-2B45-4FE1-B563-3905FFB59790}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45DE6944-E7DE-46FF-8BC7-B75B427CBEE7}
+	EndGlobalSection
+EndGlobal
