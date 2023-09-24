@@ -12,5 +12,11 @@ namespace TrainTicketApi.Models
         public string UserCollectionName { get; set; } = null!;
 
         public string TravellerCollectionName { get; set; } = null!;
+
+        public string TrainCollectionName { get; set; } = null!;
+
+        public string ScheduleCollectionName { get; set; } = null!;
+
+        public string ReservationCollectionName { get; set; } = null!;
     }
 }
