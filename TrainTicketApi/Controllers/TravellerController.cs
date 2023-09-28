@@ -68,7 +68,7 @@ namespace TrainTicketApi.Controllers
                         }
                         else
                         {
-                            result = Ok();
+                            result = Ok(user.Id);
                         }
                         break;
                     }
