@@ -144,5 +144,10 @@ namespace TrainTicketApi.Controllers
             await _reservationService.RemoveAsync(id);
             return Ok(reservation);
         }
+
+        // Get all reservations by user
+        [HttpGet("getByUser")]
+        public async Task<List<Reservation>> GetByUser(string id) =>
+            await _reservationService.GetUsersResAsync(id);
     }
 }
