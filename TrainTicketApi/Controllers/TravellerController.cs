@@ -148,5 +148,24 @@ namespace TrainTicketApi.Controllers
             await _travellerService.UpdateAsync(id, traveller);
             return Ok(traveller);
         }
+
+        // Delete traveller
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _travellerService.RemoveAsync(id);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

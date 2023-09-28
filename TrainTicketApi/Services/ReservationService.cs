@@ -29,6 +29,10 @@ namespace TrainTicketApi.Services
         public async Task<Reservation?> GetAsync(string id) =>
             await _reservationCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+        // Get a Schedules by user
+        public async Task<List<Reservation>> GetUsersResAsync(string id) =>
+            await _reservationCollection.Find(x => x.TravellerId == id).ToListAsync();
+
         // Save a new Schedules object to the db
         public async Task CreateAsync(Reservation newReservation) =>
             await _reservationCollection.InsertOneAsync(newReservation);
