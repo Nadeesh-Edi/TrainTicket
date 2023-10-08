@@ -8,15 +8,17 @@ namespace TrainTicketApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReservationController: ControllerBase
+    public class ReservationController : ControllerBase
     {
         private readonly ReservationService _reservationService;
         private readonly ScheduleService _scheduleService;
+        private readonly TrainService _trainService;
 
-        public ReservationController(ReservationService reservationService, ScheduleService scheduleService)
+        public ReservationController(ReservationService reservationService, ScheduleService scheduleService, TrainService trainService)
         {
             _reservationService = reservationService;
             _scheduleService = scheduleService;
+            _trainService = trainService;
         }
 
         // Get all reservations from db
@@ -103,7 +105,7 @@ namespace TrainTicketApi.Controllers
             {
                 selectedSchedule = await _scheduleService.GetAsync(reservation1.ScheduleId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return NotFound("Schedule Not found");
             }
@@ -147,7 +149,26 @@ namespace TrainTicketApi.Controllers
 
         // Get all reservations by user
         [HttpGet("getByUser")]
-        public async Task<List<Reservation>> GetByUser(string id) =>
-            await _reservationService.GetUsersResAsync(id);
+        public async Task<List<ReservationResponse>> GetByUser(string id) 
+        {
+            List<Reservation> reservations = await _reservationService.GetUsersResAsync(id);
+            List<ReservationResponse> results = new List<ReservationResponse>();
+
+            foreach (var item in reservations)
+            {
+                var currentSchedule = await _scheduleService.GetAsync(item.ScheduleId);
+                if (currentSchedule is not null)
+                {
+                    var currentTrain = await _trainService.GetAsync(currentSchedule.TrainId);
+                    if (currentTrain is not null)
+                    {
+                        ReservationResponse result = new ReservationResponse(item.Id, currentTrain.Name, currentSchedule.Date, currentSchedule.StartTime, item.pax);
+                        results.Add(result);
+                    }
+                }
+            }
+
+            return results;
+        }
     }
 }
