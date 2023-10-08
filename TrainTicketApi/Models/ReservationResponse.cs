@@ -6,9 +6,9 @@
 
         public string TrainName { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
 
-        public ReservationResponse(string id, string trainName, DateTime date, DateTime startTime, int pax)
+        public ReservationResponse(string id, string trainName, DateOnly date, string startTime, int pax)
         {
             Id = id;
             TrainName = trainName;
@@ -17,7 +17,7 @@
             this.pax = pax;
         }
 
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
 
         public int pax { get; set; }
     }

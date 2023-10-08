@@ -68,14 +68,33 @@ namespace TrainTicketApi.Controllers
         }
 
         // Filter schedule
-        //[HttpPost("filter")]
-        //public async Task<List<Schedule>> Filter(string start, Schedule end, string date)
-        //{
-        //    var allSchedules = await _scheduleService.GetAsync();
-        //    foreach (var item in allSchedules)
-        //    {
-                
-        //    }
-        //}
+        [HttpGet("filter")]
+        public async Task<List<Schedule>> Filter(string start, string end, string date)
+        {
+            Station starting = new Station();
+            starting.name = start;
+            List<Schedule> availableSchedules = new List<Schedule>();
+
+            Station ending = new Station();
+            ending.name = end;
+
+            List<Schedule> schedules = new List<Schedule>();
+
+            var allSchedules = await _scheduleService.GetAsync();
+
+            foreach (var x in allSchedules)
+            {
+                if ((x.Date.Day.ToString() + '-' + x.Date.Month + '-' + x.Date.Year) == date)
+                    availableSchedules.Add(x);
+            }
+
+            foreach (var item in availableSchedules)
+            {
+                List<Station> stations = item.StationList;
+                if (stations.Contains(starting) && stations.Contains(ending)) { schedules.Add(item); }
+            }
+
+            return schedules;
+        }
     }
 }

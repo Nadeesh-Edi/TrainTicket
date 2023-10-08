@@ -76,11 +76,16 @@ namespace TrainTicketApi.Controllers
             }
 
             // Check if the schedule date is within 30 days of the current date
-            DateTime currentDate = DateTime.UtcNow;
-            DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
-            TimeSpan dateDifference = scheduleDate - currentDate;
+            //DateTime currentDate = DateTime.UtcNow;
+            //DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
+            //TimeSpan dateDifference = scheduleDate - currentDate;
 
-            if (dateDifference.TotalDays > 30)
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
+
+            int dateDifference = scheduleDate.Day - currentDate.Day;
+
+            if (dateDifference > 30)
             {
                 return BadRequest("Schedule date is more than 30 days in the future.");
             }
@@ -129,11 +134,16 @@ namespace TrainTicketApi.Controllers
             }
 
             // Check if the schedule date is within 5 days of the current date
-            DateTime currentDate = DateTime.UtcNow;
-            DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
-            TimeSpan dateDifference = scheduleDate - currentDate;
+            //DateTime currentDate = DateTime.UtcNow;
+            //DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
+            //TimeSpan dateDifference = scheduleDate - currentDate;
 
-            if (dateDifference.TotalDays <= 5)
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
+
+            int dateDifference = scheduleDate.Day - currentDate.Day;
+
+            if (dateDifference <= 5)
             {
                 return BadRequest("Reservations can only be edited atleast 5 days before the reservation date");
             }
