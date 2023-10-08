@@ -13,10 +13,20 @@ namespace TrainTicketApi.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        public string TrainId { get; set; } = null!;
+        public string TrainName { get; set; } = null!;
+
+        public string StartDestination { get; set; } = null!;
+
+        public string EndDestination { get; set; } = null!;
+
+        public string StationList { get; set; } = null!;
+
+        public int Seats { get; set; }
 
         public DateTime Date { get; set; }
 
         public DateTime StartTime { get; set; }
+
+        public int status { get; set; }
     }
 }

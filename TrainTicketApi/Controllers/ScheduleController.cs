@@ -38,29 +38,14 @@ namespace TrainTicketApi.Controllers
         }
 
         // Get schedules by train Id
-        [HttpGet("getByTrain")]
-        public async Task<List<Schedule>> GetByTrain(string id) =>
-            await _scheduleService.GetAsyncByTrain(id);
+        //[HttpGet("getByTrain")]
+        //public async Task<List<Schedule>> GetByTrain(string id) =>
+        //    await _scheduleService.GetAsyncByTrain(id);
 
         // Create new schedule
         [HttpPost("create")]
         public async Task<IActionResult> Create(Schedule schedule)
         {
-            Train selectedTrain;
-            try
-            {
-               selectedTrain  = await _trainService.GetAsync(schedule.TrainId);
-            }
-            catch (Exception ex)
-            {
-                return NotFound("Invalid Train Id");
-            }
-            
-            if (selectedTrain is null)
-            {
-                return NotFound("Invalid Train Id");
-            }
-
             await _scheduleService.CreateAsync(schedule);
 
             return CreatedAtAction(nameof(Create), new { id = schedule.Id }, schedule);

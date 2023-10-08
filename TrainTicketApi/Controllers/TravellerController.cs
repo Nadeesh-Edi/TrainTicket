@@ -64,7 +64,7 @@ namespace TrainTicketApi.Controllers
                         // Check if the user is deactivated
                         if (user.Status == 0)
                         {
-                            result = Content("You are deactivated. Please contact admin");
+                            result = NotFound("You are deactivated. Please contact admin");
                         }
                         else
                         {
@@ -74,14 +74,14 @@ namespace TrainTicketApi.Controllers
                     }
                     else
                     {
-                        result = Content("Incorrect password");
+                        result = NotFound("Incorrect password");
                     }
                 }
             }
 
             if (result == null)
             {
-                result = Content("User not found");
+                result = NotFound("User not found");
             }
 
             return result;

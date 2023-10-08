@@ -21,27 +21,31 @@ namespace TrainTicketApi.Services
                 trainTicketDatabaseSettings.Value.ReservationCollectionName);
         }
 
-        // Get all Schedules as a List
+        // Get all Reservations as a List
         public async Task<List<Reservation>> GetAsync() =>
             await _reservationCollection.Find(_ => true).ToListAsync();
 
-        // Get a Schedules by id
+        // Get a Reservations by id
         public async Task<Reservation?> GetAsync(string id) =>
             await _reservationCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        // Get a Schedules by user
+        // Get a Reservations by Schedule id
+        public async Task<List<Reservation>> GetAsyncBySchedule(string id) =>
+            await _reservationCollection.Find(x => x.ScheduleId == id).ToListAsync();
+
+        // Get a Reservations by user
         public async Task<List<Reservation>> GetUsersResAsync(string id) =>
             await _reservationCollection.Find(x => x.TravellerId == id).ToListAsync();
 
-        // Save a new Schedules object to the db
+        // Save a new Reservations object to the db
         public async Task CreateAsync(Reservation newReservation) =>
             await _reservationCollection.InsertOneAsync(newReservation);
 
-        // Update an existing Schedules given the id
+        // Update an existing Reservation given the id
         public async Task UpdateAsync(string id, Reservation updatedReservation) =>
             await _reservationCollection.ReplaceOneAsync(x => x.Id == id, updatedReservation);
 
-        // Delete an existing Schedules given the id
+        // Delete an existing Reservation given the id
         public async Task RemoveAsync(string id) =>
             await _reservationCollection.DeleteOneAsync(x => x.Id == id);
     }

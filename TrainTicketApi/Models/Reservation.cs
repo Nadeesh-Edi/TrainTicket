@@ -15,6 +15,10 @@ namespace TrainTicketApi.Models
 
         public string ScheduleId { get; set; } = null!;
 
+        public string reservationStart{ get; set; } = null!;
+
+        public string reservationEnd { get; set; } = null!;
+
         public int pax { get; set; }
     }
 }

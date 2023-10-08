@@ -8,15 +8,17 @@ namespace TrainTicketApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReservationController: ControllerBase
+    public class ReservationController : ControllerBase
     {
         private readonly ReservationService _reservationService;
         private readonly ScheduleService _scheduleService;
+        private readonly TrainService _trainService;
 
-        public ReservationController(ReservationService reservationService, ScheduleService scheduleService)
+        public ReservationController(ReservationService reservationService, ScheduleService scheduleService, TrainService trainService)
         {
             _reservationService = reservationService;
             _scheduleService = scheduleService;
+            _trainService = trainService;
         }
 
         // Get all reservations from db
@@ -42,6 +44,7 @@ namespace TrainTicketApi.Controllers
         public async Task<IActionResult> Create(Reservation reservation)
         {
             Schedule selectedSchedule;
+            int count = reservation.pax;
 
             if (reservation.pax < 1)
                 return BadRequest("Invalid no.of persons");
@@ -49,13 +52,25 @@ namespace TrainTicketApi.Controllers
             try
             {
                 selectedSchedule = await _scheduleService.GetAsync(reservation.ScheduleId);
+
+                if (selectedSchedule is null)
+                {
+                    return NotFound("Schedule Not found");
+                }
+
+                // Check if the number of seats are at max
+                List<Reservation> activeResForSchedule = await _reservationService.GetAsyncBySchedule(reservation.ScheduleId);
+                foreach (var item in activeResForSchedule)
+                {
+                    count += item.pax;
+                }
+
+                if (count > selectedSchedule.Seats)
+                {
+                    return BadRequest("Reservation limit exceeded for the train");
+                }
             }
             catch (Exception ex)
-            {
-                return NotFound("Schedule Not found");
-            }
-
-            if (selectedSchedule is null)
             {
                 return NotFound("Schedule Not found");
             }
@@ -103,7 +118,7 @@ namespace TrainTicketApi.Controllers
             {
                 selectedSchedule = await _scheduleService.GetAsync(reservation1.ScheduleId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return NotFound("Schedule Not found");
             }
@@ -147,7 +162,21 @@ namespace TrainTicketApi.Controllers
 
         // Get all reservations by user
         [HttpGet("getByUser")]
-        public async Task<List<Reservation>> GetByUser(string id) =>
-            await _reservationService.GetUsersResAsync(id);
+        public async Task<List<ReservationResponse>> GetByUser(string id) 
+        {
+            List<Reservation> reservations = await _reservationService.GetUsersResAsync(id);
+            List<ReservationResponse> results = new List<ReservationResponse>();
+
+            foreach (var item in reservations)
+            {
+                var currentSchedule = await _scheduleService.GetAsync(item.ScheduleId);
+                if (currentSchedule is not null)
+                {
+                    ReservationResponse result = new ReservationResponse(item.Id, currentSchedule.TrainName, currentSchedule.Date, currentSchedule.StartTime, item.pax);
+                    results.Add(result);
+                }
+            }
+            return results;
+        }
     }
 }
