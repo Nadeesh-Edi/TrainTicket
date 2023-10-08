@@ -33,8 +33,8 @@ namespace TrainTicketApi.Services
             await _schedulesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         // Get a Schedules by Train id
-        public async Task<List<Schedule>> GetAsyncByTrain(string id) =>
-            await _schedulesCollection.Find(x => x.TrainId == id).ToListAsync();
+        //public async Task<List<Schedule>> GetAsyncByTrain(string id) =>
+         //   await _schedulesCollection.Find(x => x.TrainId == id).ToListAsync();
 
         // Save a new Schedules object to the db
         public async Task CreateAsync(Schedule newSchedule) =>

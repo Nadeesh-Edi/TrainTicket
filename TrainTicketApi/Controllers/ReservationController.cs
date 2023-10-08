@@ -44,6 +44,7 @@ namespace TrainTicketApi.Controllers
         public async Task<IActionResult> Create(Reservation reservation)
         {
             Schedule selectedSchedule;
+            int count = reservation.pax;
 
             if (reservation.pax < 1)
                 return BadRequest("Invalid no.of persons");
@@ -51,13 +52,25 @@ namespace TrainTicketApi.Controllers
             try
             {
                 selectedSchedule = await _scheduleService.GetAsync(reservation.ScheduleId);
+
+                if (selectedSchedule is null)
+                {
+                    return NotFound("Schedule Not found");
+                }
+
+                // Check if the number of seats are at max
+                List<Reservation> activeResForSchedule = await _reservationService.GetAsyncBySchedule(reservation.ScheduleId);
+                foreach (var item in activeResForSchedule)
+                {
+                    count += item.pax;
+                }
+
+                if (count > selectedSchedule.Seats)
+                {
+                    return BadRequest("Reservation limit exceeded for the train");
+                }
             }
             catch (Exception ex)
-            {
-                return NotFound("Schedule Not found");
-            }
-
-            if (selectedSchedule is null)
             {
                 return NotFound("Schedule Not found");
             }
@@ -159,15 +172,10 @@ namespace TrainTicketApi.Controllers
                 var currentSchedule = await _scheduleService.GetAsync(item.ScheduleId);
                 if (currentSchedule is not null)
                 {
-                    var currentTrain = await _trainService.GetAsync(currentSchedule.TrainId);
-                    if (currentTrain is not null)
-                    {
-                        ReservationResponse result = new ReservationResponse(item.Id, currentTrain.Name, currentSchedule.Date, currentSchedule.StartTime, item.pax);
-                        results.Add(result);
-                    }
+                    ReservationResponse result = new ReservationResponse(item.Id, currentSchedule.TrainName, currentSchedule.Date, currentSchedule.StartTime, item.pax);
+                    results.Add(result);
                 }
             }
-
             return results;
         }
     }
