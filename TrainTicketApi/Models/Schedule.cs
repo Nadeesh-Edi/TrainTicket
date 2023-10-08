@@ -23,10 +23,10 @@ namespace TrainTicketApi.Models
 
         public int Seats { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
 
-        public int status { get; set; }
+        public int Status { get; set; }
     }
 }
