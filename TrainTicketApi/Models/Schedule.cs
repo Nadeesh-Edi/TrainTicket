@@ -19,7 +19,7 @@ namespace TrainTicketApi.Models
 
         public string EndDestination { get; set; } = null!;
 
-        public string StationList { get; set; } = null!;
+        public List<Station> StationList { get; set; } = null!;
 
         public int Seats { get; set; }
 

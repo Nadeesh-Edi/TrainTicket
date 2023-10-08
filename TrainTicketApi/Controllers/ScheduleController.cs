@@ -66,5 +66,16 @@ namespace TrainTicketApi.Controllers
             await _scheduleService.UpdateAsync(id, schedule);
             return Ok(schedule);
         }
+
+        // Filter schedule
+        //[HttpPost("filter")]
+        //public async Task<List<Schedule>> Filter(string start, Schedule end, string date)
+        //{
+        //    var allSchedules = await _scheduleService.GetAsync();
+        //    foreach (var item in allSchedules)
+        //    {
+                
+        //    }
+        //}
     }
 }
