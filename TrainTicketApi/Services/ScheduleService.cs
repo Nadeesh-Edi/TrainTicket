@@ -28,6 +28,10 @@ namespace TrainTicketApi.Services
         public async Task<List<Schedule>> GetAsync() =>
             await _schedulesCollection.Find(_ => true).ToListAsync();
 
+        // Get all Active Schedules as a List
+        public async Task<List<Schedule>> GetActiveAsync() =>
+            await _schedulesCollection.Find(x => x.Status == 1).ToListAsync();
+
         // Get a Schedules by id
         public async Task<Schedule?> GetAsync(string id) =>
             await _schedulesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
