@@ -12,11 +12,13 @@ namespace TrainTicketApi.Controllers
     {
         private readonly ScheduleService _scheduleService;
         private readonly TrainService _trainService;
+        private readonly ReservationService _reservationService;
 
-        public ScheduleController(ScheduleService scheduleService, TrainService trainService)
+        public ScheduleController(ScheduleService scheduleService, TrainService trainService, ReservationService reservationService)
         {
             _scheduleService = scheduleService;
             _trainService = trainService;
+            _reservationService = reservationService;
         }
 
         // Get all schedules from db
@@ -80,7 +82,7 @@ namespace TrainTicketApi.Controllers
 
             List<Schedule> schedules = new List<Schedule>();
 
-            var allSchedules = await _scheduleService.GetAsync();
+            var allSchedules = await _scheduleService.GetActiveAsync();
 
             foreach (var x in allSchedules)
             {
@@ -95,6 +97,27 @@ namespace TrainTicketApi.Controllers
             }
 
             return schedules;
+        }
+
+        // Delete traveller
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var reservationsForSchedule = await _reservationService.GetAsyncBySchedule(id);
+
+            try
+            {
+                await _scheduleService.RemoveAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

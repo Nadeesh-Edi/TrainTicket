@@ -48,5 +48,9 @@ namespace TrainTicketApi.Services
         // Delete an existing Reservation given the id
         public async Task RemoveAsync(string id) =>
             await _reservationCollection.DeleteOneAsync(x => x.Id == id);
+
+        // Get all Reservations for a Schedule Id
+        public async Task<List<Reservation>> GetByScheduleAsync(string id) =>
+            await _reservationCollection.Find(x => x.ScheduleId == id).ToListAsync();
     }
 }

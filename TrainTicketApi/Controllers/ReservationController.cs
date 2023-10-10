@@ -48,6 +48,8 @@ namespace TrainTicketApi.Controllers
 
             if (reservation.pax < 1)
                 return BadRequest("Invalid no.of persons");
+            if (reservation.pax > 4)
+                return BadRequest("Cannot reserve more than 4 seats at once");
 
             try
             {
@@ -83,7 +85,7 @@ namespace TrainTicketApi.Controllers
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
 
-            int dateDifference = scheduleDate.Day - currentDate.Day;
+            int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
 
             if (dateDifference > 30)
             {
@@ -141,7 +143,7 @@ namespace TrainTicketApi.Controllers
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
 
-            int dateDifference = scheduleDate.Day - currentDate.Day;
+            int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
 
             if (dateDifference <= 5)
             {
@@ -157,6 +159,7 @@ namespace TrainTicketApi.Controllers
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(string id)
         {
+            Schedule selectedSchedule;
             if (id == null) { return NotFound(); }
 
             Reservation reservation = await _reservationService.GetAsync(id);
@@ -164,6 +167,25 @@ namespace TrainTicketApi.Controllers
             if (reservation is null)
             {
                 return NotFound();
+            }
+
+            try
+            {
+                selectedSchedule = await _scheduleService.GetAsync(reservation.ScheduleId);
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Schedule Not found");
+            }
+
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
+
+            int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
+
+            if (dateDifference <= 5)
+            {
+                return BadRequest("Reservations can only be deleted atleast 5 days before the reservation date");
             }
 
             await _reservationService.RemoveAsync(id);
