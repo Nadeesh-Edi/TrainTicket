@@ -1,4 +1,13 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿/******************************************************************************
+ * Reservation.cs
+ * 
+ * Description: This file contains the definition of the Reservation model class,
+ * which represents the details of a reservation for train tickets.
+ * 
+ * 
+ *****************************************************************************/
+
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System.Text.Json.Serialization;
 

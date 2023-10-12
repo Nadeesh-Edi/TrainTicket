@@ -1,4 +1,13 @@
-﻿namespace TrainTicketApi.Models
+﻿/******************************************************************************
+ * ReservationResponse.cs
+ * 
+ * Description: This file contains the definition of the ReservationResponse model class,
+ * which represents the response details of a train ticket reservation.
+ * 
+ * 
+ *****************************************************************************/
+
+namespace TrainTicketApi.Models
 {
     public class ReservationResponse
     {

@@ -1,5 +1,11 @@
-﻿// Service class for Traveller Model.
-// Handles the db configs and basic crud methods to the db.
+﻿/******************************************************************************
+ * TravellerService.cs
+ * 
+ * Description: This file contains the TravellerService class, which handles
+ * database configurations and provides basic CRUD methods for the Traveller model.
+ * 
+ * 
+ *****************************************************************************/
 
 using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;

@@ -1,4 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿/******************************************************************************
+ * DateOnlyJsonConverter.cs
+ * 
+ * Description: This file contains the implementation of a custom JSON converter
+ * for DateOnly objects, allowing for serialization and deserialization.
+ * 
+ * 
+ *****************************************************************************/
+
+using System.Text.Json.Serialization;
 using System.Text.Json;
 public sealed class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {

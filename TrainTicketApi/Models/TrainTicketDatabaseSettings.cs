@@ -1,5 +1,11 @@
-﻿// Database configurations class.
-// References to the data in appsettings.json
+﻿/******************************************************************************
+ * TrainTicketDatabaseSettings.cs
+ * 
+ * Description: This file contains the definition of the Database configurations class,
+ * which provides the references to the data in appsettings.json
+ * 
+ * 
+ *****************************************************************************/
 
 namespace TrainTicketApi.Models
 {
