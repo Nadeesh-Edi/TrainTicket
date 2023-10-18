@@ -49,5 +49,9 @@ namespace TrainTicketApi.Services
         // Delete an existing Traveller given the id
         public async Task RemoveAsync(string id) =>
             await _travellersCollection.DeleteOneAsync(x => x.Id == id);
+
+        // Get all Travellers with the given nic
+        public async Task<List<Traveller>> GetAsyncByNic(string nic) =>
+            await _travellersCollection.Find(x => x.Nic == nic).ToListAsync();
     }
 }

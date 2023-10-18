@@ -1,8 +1,8 @@
 ﻿/******************************************************************************
- * ReservationService.cs
+ * ScheduleService.cs
  * 
- * Description: This file contains the ReservationService class, which provides
- * services for managing reservations in the train ticket system.
+ * Description: This file contains the ScheduleService class, which provides
+ * services for managing schedules in the train ticket system.
  * 
  * 
  *****************************************************************************/

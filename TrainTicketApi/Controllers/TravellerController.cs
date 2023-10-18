@@ -45,9 +45,16 @@ namespace TrainTicketApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(Traveller user)
         {
-            await _travellerService.CreateAsync(user);
+            var currentTravellers = await _travellerService.GetAsyncByNic(user.Nic);
+            if (currentTravellers is null)
+            {
+                await _travellerService.CreateAsync(user);
 
-            return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
+                return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
+            } else
+            {
+                return BadRequest("User already exists");
+            }
         }
 
         // Traveller login api
