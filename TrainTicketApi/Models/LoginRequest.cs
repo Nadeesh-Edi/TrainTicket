@@ -1,5 +1,11 @@
-﻿// Model for the Login request object.
-// The model in which Request body should come in for Login APIs
+﻿/******************************************************************************
+ * LoginRequest.cs
+ * 
+ * Description: This file contains the definition of the LoginRequest model class,
+ * which represents the request object used for login APIs.
+ * 
+ * 
+ *****************************************************************************/
 
 namespace TrainTicketApi.Models
 {

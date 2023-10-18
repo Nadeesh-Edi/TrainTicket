@@ -1,4 +1,11 @@
-﻿// Model for Train object
+﻿/******************************************************************************
+ * Train.cs
+ * 
+ * Description: This file contains the definition of the Train model class,
+ * which represents details of a train object.
+ * 
+ * 
+ *****************************************************************************/
 
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;

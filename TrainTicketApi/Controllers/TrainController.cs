@@ -1,4 +1,10 @@
-﻿// Controller for Train Model
+﻿/******************************************************************************
+* TrainController.cs
+* 
+* Description: This file contains the implementation of a controller for managing trains.
+* 
+* 
+*****************************************************************************/
 
 using TrainTicketApi.Services;
 using TrainTicketApi.Models;

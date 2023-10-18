@@ -1,4 +1,11 @@
-﻿// Model for Traveller object
+﻿/******************************************************************************
+ * Traveller.cs
+ * 
+ * Description: This file contains the definition of the Traveller model class,
+ * which represents details of a traveler or passenger.
+ * 
+ * 
+ *****************************************************************************/
 
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;

@@ -1,5 +1,11 @@
-﻿// Service class for Schedule Model.
-// Handles the db configs and basic crud methods to the db.
+﻿/******************************************************************************
+ * ScheduleService.cs
+ * 
+ * Description: This file contains the ScheduleService class, which provides
+ * services for managing schedules in the train ticket system.
+ * 
+ * 
+ *****************************************************************************/
 
 using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;

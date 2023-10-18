@@ -1,4 +1,11 @@
-﻿// Model class for Schedule
+﻿/******************************************************************************
+ * Schedule.cs
+ * 
+ * Description: This file contains the definition of the Schedule model class,
+ * which represents details of train schedules and their availability.
+ * 
+ * 
+ *****************************************************************************/
 
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;

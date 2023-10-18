@@ -1,5 +1,11 @@
-﻿// Service class for Train Model.
-// Handles the db configs and basic crud methods to the db.
+﻿/******************************************************************************
+ * TrainService.cs
+ * 
+ * Description: This file contains the TrainService class, which handles
+ * database configurations and provides basic CRUD methods for the Train model.
+ * 
+ * 
+ *****************************************************************************/
 
 using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;

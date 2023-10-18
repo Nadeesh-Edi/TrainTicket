@@ -1,5 +1,11 @@
-﻿// Service class for Traveller Model.
-// Handles the db configs and basic crud methods to the db.
+﻿/******************************************************************************
+ * TravellerService.cs
+ * 
+ * Description: This file contains the TravellerService class, which handles
+ * database configurations and provides basic CRUD methods for the Traveller model.
+ * 
+ * 
+ *****************************************************************************/
 
 using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;
@@ -43,5 +49,9 @@ namespace TrainTicketApi.Services
         // Delete an existing Traveller given the id
         public async Task RemoveAsync(string id) =>
             await _travellersCollection.DeleteOneAsync(x => x.Id == id);
+
+        // Get all Travellers with the given nic
+        public async Task<List<Traveller>> GetAsyncByNic(string nic) =>
+            await _travellersCollection.Find(x => x.Nic == nic).ToListAsync();
     }
 }

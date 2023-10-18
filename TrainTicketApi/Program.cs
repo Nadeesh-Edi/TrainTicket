@@ -1,3 +1,13 @@
+/******************************************************************************
+ * Program.cs
+ * 
+ * Description: This file is the entry point for the .NET backend application.
+ * It configures and runs the application, allowing it to handle incoming requests,
+ * manage data, and provide services to client applications.
+ * 
+ * 
+ *****************************************************************************/
+
 using TrainTicketApi.Models;
 using TrainTicketApi.Services;
 

@@ -1,4 +1,10 @@
-﻿// Controller for Train Model
+﻿/******************************************************************************
+* ScheduleController.cs
+* 
+* Description: This file contains the implementation of a controller for managing train schedules.
+* 
+* 
+*****************************************************************************/
 
 using TrainTicketApi.Services;
 using TrainTicketApi.Models;
@@ -38,11 +44,6 @@ namespace TrainTicketApi.Controllers
             }
             return schedule;
         }
-
-        // Get schedules by train Id
-        //[HttpGet("getByTrain")]
-        //public async Task<List<Schedule>> GetByTrain(string id) =>
-        //    await _scheduleService.GetAsyncByTrain(id);
 
         // Create new schedule
         [HttpPost("create")]

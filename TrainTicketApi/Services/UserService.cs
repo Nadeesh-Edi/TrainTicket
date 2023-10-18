@@ -1,5 +1,11 @@
-﻿// Service class for User Model.
-// Handles the db configs and basic crud methods to the db.
+﻿/******************************************************************************
+ * UserService.cs
+ * 
+ * Description: This file contains the UserService class, which handles
+ * database configurations and provides basic CRUD methods for the User model.
+ * 
+ * 
+ *****************************************************************************/
 
 using TrainTicketApi.Models;
 using Microsoft.Extensions.Options;

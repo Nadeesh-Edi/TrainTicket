@@ -1,5 +1,14 @@
-﻿// Controller for User model methods
-// User includes Base user and Travel Agent
+﻿/******************************************************************************
+ * UserController.cs
+ * 
+ * Description: This file contains the implementation of a controller for managing users.
+ * The users includes Base User and Travel Agent
+ * Role - 1 Base USer
+ * Role - 2 Travel Agent
+ * 
+ * 
+ *****************************************************************************/
+
 
 using TrainTicketApi.Services;
 using TrainTicketApi.Models;

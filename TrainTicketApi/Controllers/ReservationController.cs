@@ -1,4 +1,10 @@
-﻿// Controller for Reservation Model
+﻿/******************************************************************************
+* ReservationController.cs
+* 
+* Description: This file contains the implementation of a controller for managing train reservations.
+* 
+* 
+*****************************************************************************/
 
 using TrainTicketApi.Services;
 using TrainTicketApi.Models;
@@ -28,15 +34,25 @@ namespace TrainTicketApi.Controllers
 
         // Get a reservation by id
         [HttpGet("get")]
-        public async Task<ActionResult<Reservation>> Get(string id)
+        public async Task<ActionResult<CurrentReservation>> Get(string id)
         {
             var reservation = await _reservationService.GetAsync(id);
+            Schedule reservationSchedule = await _scheduleService.GetAsync(reservation.ScheduleId);
+
+            if (reservationSchedule == null) { return NotFound("Schedule not found"); }
+
+            string trainName = reservationSchedule.TrainName;
+            DateOnly date = reservationSchedule.Date;
 
             if (reservation is null)
             {
                 return NotFound();
             }
-            return reservation;
+
+            CurrentReservation currentRes = new CurrentReservation(
+                id, trainName, date, reservation.reservationStart, reservation.reservationEnd, reservation.pax, reservation.ScheduleId);
+
+            return currentRes;
         }
 
         // Create new Reservation
@@ -78,10 +94,6 @@ namespace TrainTicketApi.Controllers
             }
 
             // Check if the schedule date is within 30 days of the current date
-            //DateTime currentDate = DateTime.UtcNow;
-            //DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
-            //TimeSpan dateDifference = scheduleDate - currentDate;
-
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
 
@@ -136,10 +148,6 @@ namespace TrainTicketApi.Controllers
             }
 
             // Check if the schedule date is within 5 days of the current date
-            //DateTime currentDate = DateTime.UtcNow;
-            //DateTime scheduleDate = selectedSchedule?.Date ?? DateTime.MinValue;
-            //TimeSpan dateDifference = scheduleDate - currentDate;
-
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
 
@@ -178,6 +186,7 @@ namespace TrainTicketApi.Controllers
                 return NotFound("Schedule Not found");
             }
 
+            // Check if the schedule date is within 5 days of the current date
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly scheduleDate = selectedSchedule?.Date ?? selectedSchedule.Date;
 

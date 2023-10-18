@@ -1,4 +1,14 @@
-﻿namespace TrainTicketApi.Models
+﻿/******************************************************************************
+ * Station.cs
+ * 
+ * Description: This file contains the definition of the Station class,
+ * which represents a train station.
+ * The equals method is overriden to support the requirement
+ * 
+ * 
+ *****************************************************************************/
+
+namespace TrainTicketApi.Models
 {
     public class Station
     {
