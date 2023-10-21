@@ -17,17 +17,20 @@ namespace TrainTicketApi.Models
 
         public DateOnly Date { get; set; }
 
-        public ReservationResponse(string id, string trainName, DateOnly date, string startTime, int pax)
+        public ReservationResponse(string id, string trainName, DateOnly date, string startTime, int pax, string travellerId)
         {
             Id = id;
             TrainName = trainName;
             Date = date;
             StartTime = startTime;
             this.pax = pax;
+            this.travellerId = travellerId;
         }
 
         public string StartTime { get; set; }
 
         public int pax { get; set; }
+
+        public string travellerId { get; set; }
     }
 }

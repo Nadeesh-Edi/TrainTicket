@@ -11,7 +11,7 @@ namespace TrainTicketApi.Models
 {
     public class CurrentReservation
     {
-        public CurrentReservation(string id, string trainName, DateOnly date, string reservationStart, string reservationEnd, int pax, string scheduleId)
+        public CurrentReservation(string id, string trainName, DateOnly date, string reservationStart, string reservationEnd, int pax, string scheduleId, string travellerId)
         {
             Id = id;
             TrainName = trainName;
@@ -20,6 +20,7 @@ namespace TrainTicketApi.Models
             ReservationEnd = reservationEnd;
             Pax = pax;
             ScheduleId = scheduleId;
+            this.travellerId = travellerId;
         }
 
         public string Id { get; set; }
@@ -29,5 +30,7 @@ namespace TrainTicketApi.Models
         public string ReservationEnd { get; set;}
         public int Pax { get; set;}
         public string ScheduleId { get; set; }
+
+        public string travellerId { get; set; }
     }
 }
