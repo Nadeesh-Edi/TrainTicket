@@ -218,7 +218,34 @@ namespace TrainTicketApi.Controllers
                     DateOnly scheduleDate = currentSchedule?.Date ?? currentSchedule.Date;
                     int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
 
-                    if (dateDifference > 0)
+                    if (dateDifference >= 0)
+                    {
+                        ReservationResponse result = new ReservationResponse(item.Id, currentSchedule.TrainName, currentSchedule.Date, currentSchedule.StartTime, item.pax, item.TravellerId);
+                        results.Add(result);
+                    }
+                }
+            }
+            return results;
+        }
+
+        // Get user's past reservations
+        [HttpGet("getUserHistory")]
+        public async Task<List<ReservationResponse>> GetUserHistory(string id)
+        {
+            DateOnly currentDate = DateOnly.FromDateTime((DateTime)DateTime.UtcNow);
+            List<Reservation> reservations = await _reservationService.GetUsersResAsync(id);
+            List<ReservationResponse> results = new List<ReservationResponse>();
+
+            foreach (var item in reservations)
+            {
+                var currentSchedule = await _scheduleService.GetAsync(item.ScheduleId);
+                if (currentSchedule is not null)
+                {
+                    // Check if the schedule date older than today
+                    DateOnly scheduleDate = currentSchedule?.Date ?? currentSchedule.Date;
+                    int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
+
+                    if (dateDifference < 0)
                     {
                         ReservationResponse result = new ReservationResponse(item.Id, currentSchedule.TrainName, currentSchedule.Date, currentSchedule.StartTime, item.pax, item.TravellerId);
                         results.Add(result);

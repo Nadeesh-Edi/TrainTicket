@@ -49,9 +49,18 @@ namespace TrainTicketApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(User user)
         {
-            await _userService.CreateAsync(user);
+            var currentUser = await _userService.GetAsyncByEmail(user.Email);
 
-            return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
+            if (currentUser.Count == 0)
+            {
+                await _userService.CreateAsync(user);
+
+                return CreatedAtAction(nameof(Register), new { id = user.Id }, user);
+            }
+            else
+            {
+                return BadRequest("User already exists");
+            }
         }
 
         // User login API which authenticates and returns the role

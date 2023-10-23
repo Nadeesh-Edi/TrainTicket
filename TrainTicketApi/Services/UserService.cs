@@ -49,5 +49,9 @@ namespace TrainTicketApi.Services
         // Delete an existing User given the id
         public async Task RemoveAsync(string id) =>
             await _usersCollection.DeleteOneAsync(x => x.Id == id);
+
+        // Get a User by Email
+        public async Task<List<User>> GetAsyncByEmail(string email) =>
+            await _usersCollection.Find(x => x.Email == email).ToListAsync();
     }
 }

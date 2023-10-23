@@ -9,6 +9,7 @@
 using TrainTicketApi.Services;
 using TrainTicketApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 
 namespace TrainTicketApi.Controllers
 {
@@ -29,8 +30,25 @@ namespace TrainTicketApi.Controllers
 
         // Get all schedules from db
         [HttpGet]
-        public async Task<List<Schedule>> Get() =>
-            await _scheduleService.GetAsync();
+        public async Task<List<Schedule>> Get()
+        {
+            DateOnly currentDate = DateOnly.FromDateTime((DateTime)DateTime.UtcNow);
+            var allSchedules =  await _scheduleService.GetAsync();
+            List<Schedule> schedules = new List<Schedule>();
+
+            foreach (var schedule in allSchedules)
+            {
+                // Check if the schedule date older than today
+                DateOnly scheduleDate = schedule?.Date ?? schedule.Date;
+                int dateDifference = scheduleDate.DayNumber - currentDate.DayNumber;
+
+                if (dateDifference >= 0)
+                {
+                    schedules.Add(schedule);
+                }
+            }
+            return schedules;
+        }
 
         // Get a schedule by id
         [HttpGet("get")]
@@ -110,14 +128,21 @@ namespace TrainTicketApi.Controllers
             }
             var reservationsForSchedule = await _reservationService.GetAsyncBySchedule(id);
 
-            try
+            if (reservationsForSchedule.Count == 0)
             {
-                await _scheduleService.RemoveAsync(id);
-                return Ok();
+                try
+                {
+                    await _scheduleService.RemoveAsync(id);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Cannot delete this schedule as there are current reservations");
             }
         }
     }
