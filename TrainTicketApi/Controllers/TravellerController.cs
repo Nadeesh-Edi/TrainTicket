@@ -46,7 +46,7 @@ namespace TrainTicketApi.Controllers
         public async Task<IActionResult> Register(Traveller user)
         {
             var currentTravellers = await _travellerService.GetAsyncByNic(user.Nic);
-            if (currentTravellers is null)
+            if (currentTravellers.Count == 0)
             {
                 await _travellerService.CreateAsync(user);
 
